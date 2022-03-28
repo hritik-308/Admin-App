@@ -5,25 +5,27 @@ import auth from '@react-native-firebase/auth';
 
 export default function LoginScreen({navigation}) {
 
-  const [phoneNumber, setPhoneNumber] = useState('+447444555666');
+  const [phoneNumber, setPhoneNumber] = useState('+91');
 
   // If null, no SMS has been sent
   const [confirm, setConfirm] = useState(null);
   
-  const [code, setCode] = useState('123456');
+  const [code, setCode] = useState('');
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
+    
   }
 
   async function confirmCode() {
     try {
       await confirm.confirm(code)
+      navigation.navigate('BottomNavigation')
       
     } catch (error) {
-      console.log('Invalid code.',error);
+      alert('Invalid code.',error);
     }
   }
 
@@ -52,7 +54,7 @@ export default function LoginScreen({navigation}) {
    return (
     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
       <TextInput style={{color:'black',borderWidth:1,width:350,marginBottom:20}} value={code} onChangeText={text => setCode(text)} />
-      <Button title="Confirm Code" onPress={() => confirmCode().then(()=>{navigation.navigate('BottomNavigation')})} />
+      <Button title="Confirm Code" onPress={() => confirmCode()} />
      
     </View>
   );

@@ -13,13 +13,13 @@ const StackNavigation = () => {
   return (
     <Stack.Navigator>
         
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="OTPScreen" component={OTPScreen} />
         <Stack.Screen name='BottomNavigation' component={BottomNavigation}
           options={{
             headerShown:false,
           }}
         />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="OTPScreen" component={OTPScreen} />
         {/* <Stack.Screen name='HomeScreen' component={HomeScreen}/> */}
     </Stack.Navigator>
   )

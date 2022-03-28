@@ -46,20 +46,20 @@ export default function App({navigation,props}) {
           </View>
         }
       />
-      <View>
-      <TouchableOpacity style={styles.lgt}
-       
-        onPress={LogOut}
-       
-      ><Text style={{color:'#fff'}}>LogOut</Text>
-        </TouchableOpacity>
-    
+      <View >
+          <TouchableOpacity style={styles.lgt}
+          
+            onPress={LogOut}
+          
+          ><Text style={{color:'#fff'}}>LogOut</Text>
+            </TouchableOpacity>
+        
 
-<TouchableOpacity
-onPress={()=>navigation.navigate('CreateUserScreen')}
-style={styles.float}>
-        <Image style={{width:50,height:50}}source={require('../Images/pluss.png')}/>
-    </TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>navigation.navigate('CreateUserScreen')}
+        style={styles.float}>
+                <Image style={{width:50,height:50}}source={require('../Images/pluss.png')}/>
+            </TouchableOpacity>
     </View>
     </View>
     </>
@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
     borderRadius:25,
     bottom:0,
     left:5,
-    fontSize:5
+    fontSize:5,
+    
   }
 });
 
