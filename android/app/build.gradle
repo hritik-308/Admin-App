@@ -2,7 +2,8 @@ apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services' // <- Add this line
 
 import com.android.build.OutputFile
-
+// import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+// import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -140,6 +141,16 @@ android {
         multiDexEnabled true // <-- ADD THIS in the defaultConfig section
        
     }
+    //  signingConfigs {
+    //     release {
+    //         if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+    //             storeFile file(MYAPP_UPLOAD_STORE_FILE)
+    //             storePassword MYAPP_UPLOAD_STORE_PASSWORD
+    //             keyAlias MYAPP_UPLOAD_KEY_ALIAS
+    //             keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+    //         }
+    //     }
+    // }
     splits {
         abi {
             reset()
@@ -168,6 +179,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
+            // keytool -keystore debug.keystore -list -v
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

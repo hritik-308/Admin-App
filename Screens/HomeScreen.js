@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image,Button,style,TouchableOpacity} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import database, {firebase} from '@react-native-firebase/database';
-
+import EmptyScreenz from './empty1'
 export default function App({navigation,props}) {
 
   const [itemArray, setItemArray] = useState([])
@@ -15,54 +15,74 @@ export default function App({navigation,props}) {
   
   }
   const readUserData = async () => {
-   database().ref('/users/')
+   database().ref('/Users/')
    .on('value', snapshot => {
     setItemArray(Object.values(snapshot.val()))
-    
+    console.log(setItemArray)
   });
-
   };
-  return (
-    <>
-    <View style={{marginBottom:225}} >
-      <View style={styles.title}>
-        <Text style={{flex: 1, color: '#000', fontSize: 15}}>Name</Text>
-        <Text style={{flex: 1, color: '#000', fontSize: 15}}>E-mail</Text>
-        <Text style={{flex: 1, color: '#000', fontSize: 15}}>Phone Number</Text>
-      </View>
-      <Button
-        title='GET User data'
-        onPress={readUserData}
-        color='#226557'
-      />
-     <FlatList
-        data={itemArray}
-        renderItem={({item})=>
-          <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center',color:'green', marginTop:10,padding:25}}>
-            <Text style={{flex:1,color:'#000',fontSize:15,}}>{item.name}</Text>
-            <Text style={{flex:1,color:'#000',fontSize:15,}}>{item.mail}</Text>
-            <Text style={{flex:1,color:'#000',fontSize:15,}}>{item.phone}</Text>
-           
-          </View>
-        }
-      />
-      <View >
-          <TouchableOpacity style={styles.lgt}
-          
-            onPress={LogOut}
-          
-          ><Text style={{color:'#fff'}}>LogOut</Text>
-            </TouchableOpacity>
-        
 
-        <TouchableOpacity
-        onPress={()=>navigation.navigate('CreateUserScreen')}
-        style={styles.float}>
-                <Image style={{width:50,height:50}}source={require('../Images/pluss.png')}/>
-            </TouchableOpacity>
+  const EditUser = (item) => {
+    // alert("error")
+    navigation.navigate('EditUserScreen',
+      {
+        name: item.name,
+        email: item.email,
+        phone:item.phone,
+        password:item.password,
+        id: item.id, 
+        image:item.image
+      }
+    )
+  }
+  return (
+  
+      
+    <View style={{marginBottom:120,paddingBottom:5}} >
+
+        <FlatList
+            data={itemArray}
+            renderItem={({item})=>
+            <View style={styles.Card}>
+                <Image
+                    style={styles.CardImg}
+                    source={{uri:item.image}}/>
+                <View style={styles.CardItem}>
+                    <Text style={{color:'#000',fontSize:15,}}> Name :   {item.name}</Text>
+                    <Text style={{color:'#000',fontSize:15,}}> E-mail :  {item.email}</Text>
+                    <Text style={{color:'#000',fontSize:15,}}> Phone-Number :  {item.phone}</Text>
+                    <TouchableOpacity 
+                      onPress={()=>EditUser(item)} 
+                      style={{backgroundColor:'#64beff',width:70,marginTop:10,borderRadius:5}}>
+                      <Text style={{padding:7}}>Edit user</Text>
+                    </TouchableOpacity>
+                </View>
+              </View>
+            
+            }
+            
+          />
+          <View style={{flexDirection:'row',justifyContent:"space-evenly",marginTop:10}}>
+
+              <TouchableOpacity style={styles.lgt}
+              onPress={readUserData}>
+                <Text style={{color:'#fff'}}>Fetch Data</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+              onPress={()=>navigation.navigate('EmptyScreenz')}
+              style={styles.lgt}>
+                <Text style={{color:'#fff'}}>videos</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.lgt}
+              onPress={LogOut}>
+                <Text style={{color:'#fff'}}>LogOut</Text>
+              </TouchableOpacity>
+            
+          </View>
     </View>
-    </View>
-    </>
+
 
   );
 
@@ -79,7 +99,7 @@ const styles = StyleSheet.create({
   },
   tapLogin:{
 
-    backgroundColor: '#226557',
+    backgroundColor: '#64beff',
     width:100,
     margin:100,
     color:'#fff',
@@ -87,29 +107,40 @@ const styles = StyleSheet.create({
     fontSize:20,
     textAlign:'center'
   },
-  float:{
-    width:45,
-    height:45,
-    position: 'absolute',
-    bottom:2,
-    right:5,
-    borderRadius:25,
-    justifyContent:'center',
-    alignItems: 'center',
-    borderColor:'#226557',
-    borderWidth:3
-  },
   lgt:{
-    backgroundColor:'#226557',
+    backgroundColor:'dodgerblue',
     justifyContent:'center',
     alignItems: 'center',
-    width:50,
-    height:50,
+    width:100,
+    height:40,
     borderRadius:25,
-    bottom:0,
-    left:5,
+    // bottom:0,
+    // left:5,
     fontSize:5,
     
+  },
+  Card:{
+    color:'green',
+    marginTop:10,
+    marginStart:5,
+    marginEnd:5,
+    padding:5,
+    borderWidth:2,
+    borderColor:'#64beff',
+    flexDirection:"row",
+    alignItems:'center'
+  },
+  CardImg:{
+    height:100,
+    width:100,
+    borderWidth:2,
+    borderColor:"dodgerblue",
+    borderRadius:75
+  },
+  CardItem:{
+    padding:5
   }
 });
+
+
 
