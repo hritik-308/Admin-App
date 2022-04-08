@@ -21,10 +21,7 @@ export default function EditUserScreen ({route, navigation}) {
 
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 if(progress==100) alert('image uploaded')
-                
-            }, 
-            (error) => {
-                alert("error uploading image",error)
+                navigation
             }, 
             //For fetching uploaded photo url
             () => {
@@ -191,7 +188,7 @@ const styles = StyleSheet.create({
   button: {
     justifyContent:'center',
     alignItems: "center",
-    backgroundColor: "#64beff",
+    backgroundColor: "dodgerblue",
     padding: 10,
     width:150,
     borderRadius:50,
@@ -227,7 +224,7 @@ const styles = StyleSheet.create({
     button: {
       justifyContent:'center',
       alignItems: "center",
-      backgroundColor: "#64beff",
+      backgroundColor: "dodgerblue",
       padding: 10,
       width:150,
       borderRadius:50,

@@ -1,9 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState , useEffect} from 'react'
 import { View, Text ,TextInput,Image,StyleSheet,TouchableOpacity,TouchableWithoutFeedback} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import { requestUserPermission, notificationListner} from './Notification';
 import auth, { firebase,database } from "@react-native-firebase/auth";
 import storage from '@react-native-firebase/storage'
 
@@ -16,7 +16,7 @@ export default function EmptyScreens ({navigation}) {
 
     const [downloadurl, setDownloadurl] = useState("https://reactjs.org/logo-og.png")
 
-
+    
     //open library and upload pic to firebase
     const pickImageAndUpload = ()=>{
         launchImageLibrary({quality:0.5},(fileobj)=>{
@@ -74,7 +74,12 @@ export default function EmptyScreens ({navigation}) {
       .then(() => console.log('Data updated.'))
       .then(()=> navigation.navigate('HomeScreen'))
     }
-    
+  
+    useEffect(() =>{
+      requestUserPermission()
+      notificationListner()
+      createUser()
+    }, []);
     return (
       <Formik
       initialValues={{ email: '',phone:'',phone:'',password:''}}

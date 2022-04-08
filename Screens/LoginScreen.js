@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Button, TextInput,View,Alert,Text,SafeAreaView,ScrollView,TouchableOpacity,TouchableHighlight,phone,Image} from 'react-native';
+import { Button, TextInput,View,Alert,Text,SafeAreaView,ScrollView,TouchableOpacity,TouchableHighlight,phone,Image,ImageBackground} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import COLORS from '../Constant/color';
 import STYLES from '../Constant/color';
 import PhoneInput from 'react-native-phone-number-input';
 import OtpInputs from 'react-native-otp-inputs';
 import Signup from './Signup';
-
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function LoginScreen({navigation}) {
 
@@ -21,7 +21,7 @@ export default function LoginScreen({navigation}) {
   async function signInWithPhoneNumber(phoneNumber) {
     const confirmation = await auth().signInWithPhoneNumber('+91' + phoneNumber);
     setConfirm(confirmation);
-  }
+  } 
   async function confirmCode() {
     try {
       await confirm.confirm(code)
@@ -35,6 +35,7 @@ export default function LoginScreen({navigation}) {
     //   setPhoneNumber()
     // }
     return (<>
+    
       <SafeAreaView
       style={{paddingHorizontal: 20, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -100,10 +101,12 @@ export default function LoginScreen({navigation}) {
             </Text>
           </TouchableOpacity>
       </View>
+      
       </>
     );
   }
    return (
+   
     <View style={{flex:1,justifyContent:'center',alignItems:'center',borderRadius:1}}>
       <View style={{flexDirection:'row'}}>
       <Text style={{margin:4,fontWeight: 'bold', fontSize: 37, color: COLORS.secondary, }}>
@@ -117,7 +120,7 @@ export default function LoginScreen({navigation}) {
       <Text style={{margin:60, fontSize: 16, color: COLORS.light, }}>
         Code is Send To Given Number
       </Text>
-      <TextInput style={{color:'black',borderWidth:1,width:150,marginBottom:20,borderRadius: 19,}} value={code} onChangeText={text => setCode(text)}/>
+      <TextInput keyboardType="phone-pad" style={{color:'black',borderWidth:1,width:150,marginBottom:20,borderRadius: 19,}} value={code} onChangeText={text => setCode(text)}/>
       {/* <OtpInputs
           handleChange={(code) => setCode(code)}
           numberOfInputs={6}

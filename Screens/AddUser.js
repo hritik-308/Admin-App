@@ -3,7 +3,7 @@ import { View, Text ,TextInput,Image,StyleSheet,TouchableOpacity,TouchableWithou
 import { ScrollView } from 'react-native-gesture-handler';
 
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import LinearGradient from 'react-native-linear-gradient';
 import auth, { firebase,database } from "@react-native-firebase/auth";
 import storage from '@react-native-firebase/storage'
 
@@ -86,6 +86,7 @@ export default function EmptyScreens ({navigation}) {
       validationSchema={loginValidationSchema}
     >
      {({ handleChange, handleBlur, handleSubmit, values,touched,errors,isValid }) => (
+       <LinearGradient colors={['#FC466B', '#3F5EFB']} style >
       <ScrollView style={styles.main}>
       <View>
               <Image
@@ -188,6 +189,7 @@ export default function EmptyScreens ({navigation}) {
          </View>
        
          </ScrollView>
+         </LinearGradient>
          )}
 
 </Formik>

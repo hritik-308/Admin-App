@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CreateUserScreen from '../Screens/CreateUserScreen'
 import NewUserStackNavigation from './NewUserStackNavigation'
 import EmptyScreen from '../Screens/AddUser'
+
+
 const Tab = createBottomTabNavigator();
 
 
@@ -62,6 +64,7 @@ const BottomNavigation = () => {
       
       <Tab.Screen name="Add User" component={EmptyScreen} />     
     </Tab.Navigator>
+   
   )
 }
 const styles= StyleSheet.create({
