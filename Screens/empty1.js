@@ -1,9 +1,17 @@
-import React, {useState, useRef} from 'react';
-import {StyleSheet, View, Platform, Text, FlatList,SafeAreaView} from 'react-native';
+import React, {useState, useRef,useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  Text,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 // import MediaControls, {PLAYER_STATES} from 'react-native-media-controls';
 import Video from 'react-native-video';
+import database, {firebase} from '@react-native-firebase/database';
 
-const App = () => {
+const Videoss = () => {
   const DATA = [
     {
       id: 1,
@@ -23,74 +31,63 @@ const App = () => {
       name: 'user3 ',
       video: './PocVideo.mp4',
     },
-    {
-      id: 4,
-      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-      name: 'user4 ',
-    },
-    //   {
-    //     id: 5,
-    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //   },
-    //   {
-    //     id: 6,
-    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //     name: 'user6 ',
-    //   },
-    //   {
-    //     id: 7,
-    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //     name: 'user7',
-    //   },
-    //   {
-    //     id: 8,
-    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //     name: 'user8 ',
-    //   },
-    //   {
-    //     id: 9,
-    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //     name: 'user9',
-    //   },
-    //   {
-    //     id: 10,
-    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //     name: 'user10',
-    //   },
-  ];
   
+  ];
+  useEffect(() => {
+    readUserData()
+  
+    return () => {
+      
+    }
+  }, [])
+  
+  const [itemArray, setitemArray] = useState([])
+
+  //ReadUser data from rnFirebase realtime DB
+  const readUserData = async () => {
+    database().ref('/Users/')
+    .on('value', snapshot => {
+      setitemArray(Object.values(snapshot.val()))
+    
+    //  console.log(Object.values(snapshot.val()))
+   });
+   };
+
   // The video we will play on the player.
   // const video = require('./PocVideo.mp4');
 
   return (
     <>
-      <Text>start</Text>
       <FlatList
-        data={DATA}
+        data={itemArray}
         renderItem={({item}) => {
-          return (
-            <>
-            <SafeAreaView>
-              <View style={styles.videoCard}>
-                <View>
-                  <Video
-                    paused={false}
-                    source={{uri: item.url}}
-                    style={styles.backgroundVideo}
-                  />
-                </View>
-                <View style={styles.videoDes}>
-                  <Text style={styles.videoDesText}>User Name: {item.name}</Text>
-                  <Text>User email : {item.id}</Text>
-                  <Text>User Phone :{item.url}</Text>
-                </View>
-              </View>
-              </SafeAreaView>
-            </>
-          );
+          if (item.video){
+            return (
+              <>
+                <SafeAreaView>
+                  <View style={styles.videoCard}>
+                    <View>
+                      <Video
+                        paused={false}
+                        source={{uri: item.video}}
+                        style={styles.backgroundVideo}
+                      />
+                    </View>
+                    <View style={styles.videoDes}>
+                      <Text style={styles.videoDesText}>
+                        User Name: {item.name}
+                      </Text>
+                      <Text style={styles.videoDesText}>User email : {item.email}</Text>
+                      <Text style={styles.videoDesText}>User Phone :{item.phone}</Text>
+                    </View>
+                  </View>
+                </SafeAreaView>
+              </>
+            );
+
+          }
         }}
       />
-      <Text>Ends</Text>
     </>
   );
 };
@@ -99,8 +96,8 @@ const styles = StyleSheet.create({
   backgroundVideo: {
     height: 250,
     width: '100%',
-    borderWidth: 5,
-    overflow: 'hidden',
+    borderBottomWidth: 5,
+    
   },
   videoCard: {
     // backgroundColor: 'red',
@@ -116,12 +113,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
   },
-  videoDes:{
-      padding: 5
-    },
-    videoDesText:{
-        color: 'black'
-    },
+  videoDes: {
+    padding: 5,
+  },
+  videoDesText: {
+    color: 'black',
+  },
 });
 
-export default App;
+export default Videoss;

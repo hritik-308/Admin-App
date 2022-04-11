@@ -149,15 +149,15 @@ export default function HmScrn({navigation,props}) {
           <ActionButton buttonColor="dodgerblue" size={50} spacing={6}  position='right' offsetY={-7} >
            
             <ActionButton.Item buttonColor='#fff' title="Create" onPress={() => navigation.navigate('CreateUserScreen')}>
-            <Image source={require('../Images/home.png')} style={{height:5,width:4,padding:11}}/>
+            <Image source={require('../Images/createusers.png')} style={{height:5,width:4,padding:11}}/>
             </ActionButton.Item>
 
             <ActionButton.Item buttonColor='#fff' title="LogOut" onPress={LogOut}>
-            <Image source={require('../Images/home.png')} style={{height:5,width:4,padding:10}}/>
+            <Image source={require('../Images/Logoutt.png')} style={{height:5,width:4,padding:10}}/>
             </ActionButton.Item>
 
-            <ActionButton.Item buttonColor='#fff' title="Videos" onPress={()=>navigation.navigate(Videoss)}>
-            <Image source={require('../Images/pencil.png')} style={{height:5,width:4,padding:10}}/>
+            <ActionButton.Item buttonColor='#fff' title="Videoss" onPress={()=>navigation.navigate(Videoss)}>
+            <Image source={require('../Images/read.png')} style={{height:5,width:4,padding:10}}/>
             </ActionButton.Item>
 
           </ActionButton>
