@@ -26,6 +26,11 @@ export default function StackNavigation() {
 
   return (
     <Stack.Navigator>
+      <Stack.Screen name='BottomNavigation' component={BottomNavigation}
+        options={{
+          headerShown:false,
+        }}
+      />
       {showSplashScreen ? (
         <Stack.Screen
         name="Splash"
@@ -33,16 +38,11 @@ export default function StackNavigation() {
         options={{headerShown: false}}
         />
         ) : null}
-        <Stack.Screen name='BottomNavigation' component={BottomNavigation}
-          options={{
-            headerShown:false,
-          }}
-        />
-          <Stack.Screen name='LoginScreen' component={LoginScreen}
-            options={{
-              headerShown:false,
-            }}
-          />
+            <Stack.Screen name='LoginScreen' component={LoginScreen}
+              options={{
+                headerShown:false,
+              }}
+            />
         
         <Stack.Screen name="CreateUserScreen" component={EmptyScreens} />
 <Stack.Screen name="EditUserScreen" component={EditUserScreen} />

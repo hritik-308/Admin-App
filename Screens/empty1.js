@@ -1,143 +1,127 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-  Linking,
-} from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage';
+import React, {useState, useRef} from 'react';
+import {StyleSheet, View, Platform, Text, FlatList,SafeAreaView} from 'react-native';
+// import MediaControls, {PLAYER_STATES} from 'react-native-media-controls';
+import Video from 'react-native-video';
 
-
-export default function App() {
-  const [uploading, setUploading] = useState(false);
-  const [uploadTask, setUploadTask] = useState();
-  const [uploadTaskSnapshot, setUploadTaskSnapshot] = useState({});
-  const [downloadURL, setDownloadURL] = useState();
-  const [paused, setPaused] = useState(false);
-
-
-  const onTakeVideo = () => launchCamera({ mediaType: 'video' }, onMediaSelect);
-  const onSelectVideoPress = () =>
-    launchImageLibrary({ mediaType: 'video' }, onMediaSelect);
-
-  const togglePause = () => {
-    if (paused) uploadTask.resume();
-    else uploadTask.pause();
-    setPaused((paused) => !paused);
-  };
-
+const App = () => {
+  const DATA = [
+    {
+      id: 1,
+      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      name: 'user1 ',
+      video: './PocVideo.mp4',
+    },
+    {
+      id: 2,
+      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      name: 'user2 ',
+      video: './PocVideo.mp4',
+    },
+    {
+      id: 3,
+      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      name: 'user3 ',
+      video: './PocVideo.mp4',
+    },
+    {
+      id: 4,
+      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      name: 'user4 ',
+    },
+    //   {
+    //     id: 5,
+    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //   },
+    //   {
+    //     id: 6,
+    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //     name: 'user6 ',
+    //   },
+    //   {
+    //     id: 7,
+    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //     name: 'user7',
+    //   },
+    //   {
+    //     id: 8,
+    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //     name: 'user8 ',
+    //   },
+    //   {
+    //     id: 9,
+    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //     name: 'user9',
+    //   },
+    //   {
+    //     id: 10,
+    //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //     name: 'user10',
+    //   },
+  ];
   
-  const onMediaSelect = async (fileobj) => {
-    // console.log(fileobj.assets[0].uri)
-    const uploadTask =  storage().ref().child(`/uploadVideos/${Date.now()}`).putFile(fileobj.assets[0].uri)
-    console.log(fileobj.assets[0].uri)
-    uploadTask.on('state_changed', 
-     (snapshot) => {
-        // console.log(snapshot)
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        if(progress==100) alert('video uploaded')
-        
-    }, 
-    (error) => {
-        alert("error uploading image",error)
-    }, 
-    //For fetching uploaded photo url
-    () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            setDownloadURL(downloadURL)
-        });
-    }
-    );
-  }
+  // The video we will play on the player.
+  // const video = require('./PocVideo.mp4');
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Firebase Storage</Text>
-      <View>
-        
-        <TouchableOpacity style={styles.button} onPress={onTakeVideo}>
-          <Text style={styles.buttonText}>Record Video</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.button} onPress={onSelectVideoPress}>
-          <Text style={styles.buttonText}>Pick a Video</Text>
-        </TouchableOpacity>
-      </View>
-      {uploading && (
-        <View style={styles.uploading}>
-          {!paused && (
-            <ActivityIndicator size={60} color="#47477b"></ActivityIndicator>
-          )}
-          <Text style={styles.statusText}>
-            {!paused ? 'Uploading' : 'Paused'}
-          </Text>
-          <Text style={styles.statusText}>
-            {`${(
-              (uploadTaskSnapshot.bytesTransferred /
-                uploadTaskSnapshot.totalBytes) *
-              100
-            ).toFixed(2)}% / 100%`}
-          </Text>
-          <TouchableOpacity style={styles.button} onPress={togglePause}>
-            <Text style={styles.buttonText}>{paused ? 'Resume' : 'Pause'}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      {downloadURL && (
-        <TouchableOpacity
-          style={[styles.button, styles.mediaButton]}
-          onPress={() => Linking.openURL(downloadURL)}>
-          <Text style={styles.buttonText}>View Media</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+    <>
+      <Text>start</Text>
+      <FlatList
+        data={DATA}
+        renderItem={({item}) => {
+          return (
+            <>
+            <SafeAreaView>
+              <View style={styles.videoCard}>
+                <View>
+                  <Video
+                    paused={false}
+                    source={{uri: item.url}}
+                    style={styles.backgroundVideo}
+                  />
+                </View>
+                <View style={styles.videoDes}>
+                  <Text style={styles.videoDesText}>User Name: {item.name}</Text>
+                  <Text>User email : {item.id}</Text>
+                  <Text>User Phone :{item.url}</Text>
+                </View>
+              </View>
+              </SafeAreaView>
+            </>
+          );
+        }}
+      />
+      <Text>Ends</Text>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  center: {
-    flex: 1,
+  backgroundVideo: {
+    height: 250,
     width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 50,
+    borderWidth: 5,
+    overflow: 'hidden',
   },
-  title: {
-    fontSize: 35,
-    marginVertical: 40,
+  videoCard: {
+    // backgroundColor: 'red',
+    borderWidth: 4,
+    marginBottom: 5,
+    borderColor: 'black',
+    margin: 15,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
-  button: {
-    backgroundColor: '#226557',
-    color: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 50,
-    marginTop: 20,
+  mediaControls: {
+    height: '100%',
+    flex: 1,
+    alignSelf: 'center',
   },
-  buttonText: {
-    color: '#fff',
-  },
-  mediaButton: {
-    position: 'absolute',
-    bottom: 0,
-    marginBottom: 50,
-    width: 300,
-  },
-  uploading: {
-    marginTop: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  statusText: {
-    marginTop: 20,
-    fontSize: 20,
-  },
+  videoDes:{
+      padding: 5
+    },
+    videoDesText:{
+        color: 'black'
+    },
 });
+
+export default App;

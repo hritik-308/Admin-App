@@ -2,10 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {View, LogBox,StyleSheet, Text, Image,Button,style,TouchableOpacity,TextInput,ImageBackground} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import database, {firebase} from '@react-native-firebase/database';
-import { back } from 'react-native/Libraries/Animated/Easing';
 import {Picker} from '@react-native-picker/picker';
 import ActionButton from "react-native-action-button";
-import { color } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import Videoss from './empty1';
 export default function HmScrn({navigation,props}) {
@@ -85,11 +83,10 @@ export default function HmScrn({navigation,props}) {
       newList.sort((a, b) => (a.email.toLowerCase() > b.email.toLowerCase() ? 1 : b.email.toLowerCase() > a.email.toLowerCase() ? -1 : 0));
       setFilteredData(newList);
     };
-  
   return (
   
       
-    <LinearGradient colors={['#FC466B', '#3F5EFB']} style={{marginBottom:140,paddingBottom:5}} >
+    <LinearGradient colors={['#2980B9', '#6DD5FA', '#FFFFFF']} style={{marginBottom:140,paddingBottom:5,}} >
     
     
     <View style={{flexDirection:'row'}}>
@@ -120,18 +117,13 @@ export default function HmScrn({navigation,props}) {
             }
             }            
           }>         
-      
           <Picker.Item label="Filter" enabled={false}  value="sortBy" />
           <Picker.Item label="A-Z" value="A-Z" />
           <Picker.Item label="Z-A"  value="Z-A" />
           <Picker.Item label="email" onPress={emailSort} value="email" /> 
         </Picker>
  </View>
- 
-    </View>
- {/* <Button title='wq '
- onPress={emailSort}/>        */}
-        
+    </View>        
         <FlatList
             data={SearchBtn}
             renderItem={({item})=>
@@ -151,10 +143,10 @@ export default function HmScrn({navigation,props}) {
                     </TouchableOpacity>
                 </View>
             </View>
-            
             }
           /> 
-          <ActionButton buttonColor="dodgerblue" size={50} spacing={6} bgColor='#F4F5FF' position='right' offsetY={12}>
+          <View style={{marginBottom:760,paddingBottom:5 }}>
+          <ActionButton buttonColor="dodgerblue" size={50} spacing={6}  position='right' offsetY={-7} >
            
             <ActionButton.Item buttonColor='#fff' title="Create" onPress={() => navigation.navigate('CreateUserScreen')}>
             <Image source={require('../Images/home.png')} style={{height:5,width:4,padding:11}}/>
@@ -169,13 +161,11 @@ export default function HmScrn({navigation,props}) {
             </ActionButton.Item>
 
           </ActionButton>
+          </View>
     </LinearGradient>
     
-
   );
-
 }
-
 const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
@@ -210,8 +200,6 @@ const styles = StyleSheet.create({
     width:100,
     height:40,
     borderRadius:25,
-    // bottom:0,
-    // left:5,
     fontSize:5,
     
   },
@@ -233,7 +221,6 @@ const styles = StyleSheet.create({
       width:100,
       height:100
     },
-    // backgroundColor:'#000'
   },
   CardImg:{
     height:100,
