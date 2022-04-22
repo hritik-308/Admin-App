@@ -1,21 +1,17 @@
 import {View, Text, StyleSheet, Image, StatusBar} from 'react-native';
 import React from 'react';
 
-import Logo from '../Images/netflix.png';
+import Logo from '../Images/splash.png';
 
 export default function SplashScreen() {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
 
-    
-
       <View style={styles.logoContainer}>
         <Image source={Logo} style={styles.logo} />
-
-        
       </View>
-      </View>
+    </View>
   );
 }
 
@@ -40,4 +36,4 @@ const styles = StyleSheet.create({
   bottomText: {
     color: '#fff',
   },
-})
+});

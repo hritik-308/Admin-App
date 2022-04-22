@@ -1,15 +1,10 @@
-import React, {useState, useRef,useEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  Text,
-  FlatList,
-  SafeAreaView,
-} from 'react-native';
-// import MediaControls, {PLAYER_STATES} from 'react-native-media-controls';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text, FlatList, SafeAreaView} from 'react-native';
 import Video from 'react-native-video';
 import database, {firebase} from '@react-native-firebase/database';
+import {ActivityIndicator} from 'react-native-paper';
+import {WebView} from 'react-native-webview';
+import {array} from 'yup';
 
 const Videoss = () => {
   const DATA = [
@@ -31,73 +26,76 @@ const Videoss = () => {
       name: 'user3 ',
       video: './PocVideo.mp4',
     },
-  
   ];
   useEffect(() => {
-    readUserData()
-  
-    return () => {
-      
-    }
-  }, [])
-  
-  const [itemArray, setitemArray] = useState([])
+    readUserData();
+
+    return () => {};
+  }, []);
+
+  const [itemArray, setitemArray] = useState([]);
 
   //ReadUser data from rnFirebase realtime DB
   const readUserData = async () => {
-    database().ref('/Users/')
-    .on('value', snapshot => {
-      setitemArray(Object.values(snapshot.val()))
-    
-    //  console.log(Object.values(snapshot.val()))
-   });
-   };
-
-  // The video we will play on the player.
-  // const video = require('./PocVideo.mp4');
+    let array = [];
+    database()
+      .ref('/Users/')
+      .on('value', snapshot => {
+        const datas = Object.values(snapshot.val());
+        datas.map((item, index) => {
+          const videoData = Object.values(item.vedios);
+          // console.warn("Data--->",videoData);
+          array.push(videoData);
+          
+        });
+        setitemArray(array);
+        // console.log('`use state data====>`',itemArray)
+      });
+  };
 
   return (
-    <>
-      <FlatList
-        data={itemArray}
-        renderItem={({item}) => {
-          if (item.video){
-            return (
-              <>
-                <SafeAreaView>
-                  <View style={styles.videoCard}>
-                    <View>
-                      <Video
-                        paused={false}
-                        source={{uri: item.video}}
-                        style={styles.backgroundVideo}
-                      />
-                    </View>
-                    <View style={styles.videoDes}>
-                      <Text style={styles.videoDesText}>
-                        User Name: {item.name}
-                      </Text>
-                      <Text style={styles.videoDesText}>User email : {item.email}</Text>
-                      <Text style={styles.videoDesText}>User Phone :{item.phone}</Text>
-                    </View>
-                  </View>
-                </SafeAreaView>
-              </>
-            );
-
+    <FlatList
+      data={itemArray}
+      renderItem={({item}) => (
+        <FlatList
+          data={item}
+          renderItem={
+            ({item, index1}) => {
+              return (
+                // <Text>{item.vedio}</Text>
+                <>
+                <WebView
+                  style={{width: '95%',marginLeft:10, height: 200,marginBottom:10}}
+                  source={{
+                    uri: item.vedio,
+                  }}
+                  />
+                </>
+                
+              );
+            }
+            // console.log(item)
           }
-        }}
-      />
-    </>
+        />
+      )}
+    />
   );
 };
 
+{
+  /* <WebView
+        style={{ width: '100%', height: 200, }}
+          source={{
+            uri: 'https://firebasestorage.googleapis.com/v0/b/vinove-demo-project.appspot.com/o/uploadVideos%2F1650517026208?alt=media&token=1abfd503-a49e-4c40-b33a-67b4ba693926',
+          }}
+        /> */
+}
 const styles = StyleSheet.create({
   backgroundVideo: {
     height: 250,
     width: '100%',
+    backgroundColor: 'yellow',
     borderBottomWidth: 5,
-    
   },
   videoCard: {
     // backgroundColor: 'red',
