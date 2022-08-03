@@ -8,7 +8,6 @@ import EditUserScreen from '../Screens/EditUsersScreen';
 import SplashScreen from '../Screens/SplashScreen';
 import EmptyScreens from '../Screens/AddUser';
 import Videoss from '../Screens/empty1';
-import image from '../Screens/image';
 import Images from '../Screens/image';
 const Stack = createNativeStackNavigator();
 export default function StackNavigation() {
@@ -29,6 +28,13 @@ export default function StackNavigation() {
           options={{headerShown: false}}
           />
           ) : null}
+            <Stack.Screen
+              name="LoginScreen"                        
+              component={LoginScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
           <Stack.Screen
             name="BottomNavigation"
             component={BottomNavigation}
@@ -36,13 +42,6 @@ export default function StackNavigation() {
               headerShown: false,
             }}
           />
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
       <Stack.Screen name="CreateUserScreen" component={EmptyScreens} />
       <Stack.Screen name="EditUserScreen" component={EditUserScreen} />
       <Stack.Screen name="Signup" component={Signup} />

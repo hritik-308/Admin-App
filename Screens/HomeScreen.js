@@ -116,7 +116,7 @@ export default function HmScrn({navigation, props}) {
   };
   return (
     <LinearGradient
-      colors={['#2980B9', '#6DD5FA', '#FFFFFF']}
+      colors={[ '#C06C84', '#6C5B7B','#355C7D']}
       style={{marginBottom: 140, paddingBottom: 5}}>
       <View style={{flexDirection: 'row'}}>
         <TextInput
@@ -187,7 +187,7 @@ export default function HmScrn({navigation, props}) {
                 {' '}
                 Phone-Number : {item.phone}
               </Text>
-              <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
+            
                 <TouchableOpacity
                   onPress={() => EditUser(item)}
                   style={{
@@ -200,31 +200,6 @@ export default function HmScrn({navigation, props}) {
                   <Text style={{padding: 7}}>Edit user</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() => navigation.navigate(Videoss)}
-                  style={{
-                    backgroundColor: 'dodgerblue',
-                    width: 70,
-                    marginTop: 10,
-                    borderRadius: 5,
-                    alignItems:'center'
-                  }}>
-                  <Text style={{padding: 7}}>Video</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => navigation.navigate(Images)}
-                  style={{
-                    backgroundColor: 'dodgerblue',
-                    width: 70,
-                    marginTop: 10,
-                    borderRadius: 5,
-                    marginHorizontal:10,
-                    alignItems:'center'
-                  }}>
-                  <Text style={{padding: 7}}>Photo</Text>
-                </TouchableOpacity>
-              </View>
             </View>
           </View>
         )}

@@ -20,6 +20,32 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     flex: 1,
     justifyContent: 'space-around',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     alignItems: 'center',
   },
   logoContainer: {

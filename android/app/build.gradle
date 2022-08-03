@@ -145,6 +145,9 @@ android {
         multiDexEnabled true // <-- ADD THIS in the defaultConfig section
        
     }
+
+
+
     //  signingConfigs {
     //     release {
     //         if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
